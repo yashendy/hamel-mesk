@@ -4,113 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بطاقة تعارف - لجنة التحكيم</title>
-    <!-- استدعاء مكتبة التصميم -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء مكتبة التقاط الصور -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <!-- استدعاء الخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- استدعاء ملف الـ CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #f3f4f6;
+        }
+        
+        /* نمط الزخرفة الإسلامية/الرسمية الخفيفة في الخلفية */
+        .pattern-bg {
+            background-color: #ffffff;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a8a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* إعدادات الطباعة للحصول على كارت نظيف */
+        @media print {
+            body {
+                background: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .card-container {
+                box-shadow: none !important;
+                border: 1px solid #e5e7eb;
+                margin: 0;
+                transform: scale(1.1);
+            }
+            /* إخفاء حدود الإدخال عند الطباعة إذا كان فارغاً */
+            input::placeholder {
+                color: transparent;
+            }
+        }
+
+        .font-amiri { font-family: 'Amiri', serif; }
+        .font-cairo { font-family: 'Cairo', sans-serif; }
+        
+        /* إزالة التحديد الأزرق الافتراضي عند الكتابة */
+        input:focus {
+            outline: none;
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <!-- أزرار التحكم -->
+    <!-- أزرار التحكم (لا تظهر في الطباعة) -->
     <div class="no-print mb-4 flex flex-col gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100 w-full max-w-[700px]">
+        
+        <!-- أزرار التنقل بين الصفحات -->
         <div class="flex gap-3 w-full justify-center border-b border-gray-200 pb-4 flex-wrap">
-            <button id="btnPage1" onclick="showPage(1)" class="bg-blue-900 text-white font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2">الصفحة الرئيسية</button>
-            <button id="btnPage2" onclick="showPage(2)" class="bg-gray-200 text-gray-700 hover:bg-gray-300 font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2">لجنة التحكيم</button>
-            <button id="btnPage3" onclick="showPage(3)" class="bg-gray-200 text-gray-700 hover:bg-gray-300 font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2">صفحة الطلبة</button>
+            <button id="btnPage1" onclick="showPage(1)" class="bg-blue-900 text-white font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2">
+                الصفحة الرئيسية (الدبلومة)
+            </button>
+            <button id="btnPage2" onclick="showPage(2)" class="bg-gray-200 text-gray-700 hover:bg-gray-300 font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2">
+                صفحة لجنة التحكيم
+            </button>
+            <button id="btnPage3" onclick="showPage(3)" class="bg-gray-200 text-gray-700 hover:bg-gray-300 font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2">
+                صفحة الطلبة
+            </button>
         </div>
+
+        <!-- أزرار الإدخال والطباعة -->
         <div class="flex gap-3 justify-center flex-wrap">
-            <button onclick="downloadCard(this)" class="bg-blue-900 hover:bg-blue-800 text-white font-cairo font-semibold py-2 px-6 rounded-lg shadow-md transition-colors flex items-center gap-2">تحميل البطاقة كصورة (للطباعة)</button>
+            <button onclick="downloadCard(this)" class="bg-blue-900 hover:bg-blue-800 text-white font-cairo font-semibold py-2 px-6 rounded-lg shadow-md transition-colors flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                تحميل البطاقة كصورة (للطباعة)
+            </button>
         </div>
     </div>
     
-    <p class="no-print text-gray-500 font-cairo text-sm mb-6 flex items-center text-center">* الشعار ثابت في الزاوية. سيتم طباعة الصفحة المحددة حالياً فقط.</p>
+    <p class="no-print text-gray-500 font-cairo text-sm mb-6 flex items-center text-center">
+        * الشعار ثابت في الزاوية. سيتم طباعة الصفحة المحددة حالياً فقط.
+    </p>
 
     <!-- البطاقة -->
     <div class="card-container pattern-bg relative w-full max-w-[700px] h-[550px] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col border border-gray-200">
         
+        <!-- الشريط العلوي الزخرفي -->
         <div class="h-4 w-full bg-blue-900"></div>
         <div class="h-1 w-full bg-yellow-600"></div>
 
-        <!-- علامات مائية -->
+        <!-- علامات مائية للزوايا -->
         <div class="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-blue-900 opacity-20 z-0"></div>
         <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-blue-900 opacity-20 z-0"></div>
         <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-blue-900 opacity-20 z-0"></div>
         <div class="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-blue-900 opacity-20 z-0"></div>
 
-        <!-- الصفحة الأولى -->
+        <!-- ================= الصفحة الأولى (الرئيسية) ================= -->
         <div id="page1" style="display: flex;" class="flex-1 flex-col items-center justify-center p-8 relative w-full z-10">
+            
             <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-6 right-8 max-w-[120px] max-h-[120px] object-contain z-20">
-            <h3 class="font-cairo font-bold text-xl md:text-2xl text-blue-900 mb-6 text-center mt-20">أكاديمية حامل المسك لعلوم القرآن واللغة العربية</h3>
-            <h1 class="font-amiri text-3xl md:text-4xl font-bold text-yellow-700 text-center leading-tight mb-3">الدورة الكبرى لتوجيه القراءات<br>العشر المتواترة</h1>
-            <h2 class="font-cairo text-2xl font-bold text-blue-900 mb-2 text-center">دبلومة التوجيه</h2>
-            <div class="font-cairo text-lg text-gray-600 mb-8 text-center font-semibold bg-gray-100 px-4 py-1 rounded-full inline-block mx-auto">الدورة الثانية (١٤٤٥هـ - ١٤٤٧هـ)</div>
+
+            <h3 class="font-cairo font-bold text-xl md:text-2xl text-blue-900 mb-6 text-center mt-20">
+                أكاديمية حامل المسك لعلوم القرآن واللغة العربية
+            </h3>
+            
+            <h1 class="font-amiri text-3xl md:text-4xl font-bold text-yellow-700 text-center leading-tight mb-3">
+                الدورة الكبرى لتوجيه القراءات<br>العشر المتواترة
+            </h1>
+            
+            <h2 class="font-cairo text-2xl font-bold text-blue-900 mb-2 text-center">
+                دبلومة التوجيه
+            </h2>
+            
+            <div class="font-cairo text-lg text-gray-600 mb-8 text-center font-semibold bg-gray-100 px-4 py-1 rounded-full inline-block mx-auto">
+                الدورة الثانية (١٤٤٥هـ - ١٤٤٧هـ)
+            </div>
+
             <div class="mt-2 flex flex-col items-center w-full">
                 <p class="font-cairo text-gray-700 text-center mb-1 text-sm md:text-base">تقديم العبد الفقير لعفو ربه:</p>
-                <h2 class="font-amiri text-3xl font-bold text-blue-900 text-center mb-3">دكتور / شعبان بن إبراهيم سند</h2>
-                <p class="font-cairo text-gray-600 text-center text-sm md:text-base leading-relaxed max-w-md">المجاز بالقراءات العشر الصغرى من طريق الشاطبية والدرة<br>دكتوراه في اللغة العربية وآدابها</p>
+                <h2 class="font-amiri text-3xl font-bold text-blue-900 text-center mb-3">
+                    دكتور / شعبان بن إبراهيم سند
+                </h2>
+                <p class="font-cairo text-gray-600 text-center text-sm md:text-base leading-relaxed max-w-md">
+                    المجاز بالقراءات العشر الصغرى من طريق الشاطبية والدرة<br>
+                    دكتوراه في اللغة العربية وآدابها
+                </p>
             </div>
+            
         </div>
 
-        <!-- الصفحة الثانية -->
+        <!-- ================= الصفحة الثانية (لجنة التحكيم) ================= -->
         <div id="page2" style="display: none;" class="flex-1 flex-col items-center justify-center p-8 relative w-full z-10">
+            
             <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-6 right-8 max-w-[120px] max-h-[120px] object-contain z-20">
-            <h1 class="font-amiri text-3xl md:text-4xl font-bold text-blue-900 text-center leading-tight mb-4 mt-20">دبلومة توجيه القراءات العشر المتواتر</h1>
-            <h2 class="font-cairo text-2xl md:text-3xl font-bold text-yellow-700 text-center mb-8">أعضاء لجنة التحكيم</h2>
+
+            <h1 class="font-amiri text-3xl md:text-4xl font-bold text-blue-900 text-center leading-tight mb-4 mt-20">
+                دبلومة توجيه القراءات العشر المتواتر
+            </h1>
+
+            <h2 class="font-cairo text-2xl md:text-3xl font-bold text-yellow-700 text-center mb-8">
+                أعضاء لجنة التحكيم
+            </h2>
+
             <div class="flex flex-row w-full max-w-3xl gap-8 px-4 text-right justify-center">
+                
                 <div class="flex-1 bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
                     <h3 class="font-cairo font-bold text-xl text-blue-900 mb-4 border-b-2 border-yellow-600 pb-2 inline-block">لجنة الرجال</h3>
                     <ul class="font-cairo text-gray-800 space-y-4 font-semibold text-lg">
-                        <li><span class="text-yellow-600 ml-2">▪</span> د. شعبان سند <span class="block font-normal text-sm text-gray-500 pr-5 mt-1">مدير الأكاديمية</span></li>
+                        <li>
+                            <span class="text-yellow-600 ml-2">▪</span> د. شعبان سند
+                            <span class="block font-normal text-sm text-gray-500 pr-5 mt-1">مدير الأكاديمية</span>
+                        </li>
                         <li><span class="text-yellow-600 ml-2">▪</span> الشيخ سعد فرج موسى صالح</li>
                     </ul>
                 </div>
+                
                 <div class="flex-1 bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
                     <h3 class="font-cairo font-bold text-xl text-blue-900 mb-4 border-b-2 border-yellow-600 pb-2 inline-block">لجنة الأخوات</h3>
                     <ul class="font-cairo text-gray-800 space-y-4 font-semibold text-lg">
-                        <li><span class="text-yellow-600 ml-2">١.</span> أ. حميدة المرسي <span class="block font-normal text-sm text-gray-500 pr-6 mt-1">مشرفة الأكاديمية</span></li>
+                        <li>
+                            <span class="text-yellow-600 ml-2">١.</span> أ. حميدة المرسي
+                            <span class="block font-normal text-sm text-gray-500 pr-6 mt-1">مشرفة الأكاديمية</span>
+                        </li>
                         <li><span class="text-yellow-600 ml-2">٢.</span> د. عزة إبراهيم</li>
                         <li><span class="text-yellow-600 ml-2">٣.</span> أ. زهرة غزال</li>
                         <li><span class="text-yellow-600 ml-2">٤.</span> أ. فاطمة أحمد طه</li>
                     </ul>
                 </div>
             </div>
+
         </div>
 
-        <!-- الصفحة الثالثة (الطلبة) -->
+        <!-- ================= الصفحة الثالثة (الطلبة) ================= -->
         <div id="page3" style="display: none;" class="flex-1 flex-col items-center justify-center p-8 relative w-full z-10">
-            <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-6 right-8 max-w-[120px] max-h-[120px] object-contain z-20">
-            <h1 class="font-amiri text-3xl md:text-4xl font-bold text-blue-900 text-center leading-tight mb-4 mt-20">دبلومة توجيه القراءات العشر المتواتر</h1>
-            <h2 class="font-cairo text-2xl md:text-3xl font-bold text-yellow-700 text-center mb-6">بيان نجاح طالب</h2>
             
-            <div class="no-print w-full max-w-xl mx-auto bg-blue-50 border border-blue-200 p-4 rounded-xl mb-6 flex items-center gap-4 shadow-sm">
-                <label class="font-cairo font-bold text-lg text-blue-900 whitespace-nowrap">ابحث برقم الجلوس:</label>
-                <input type="number" id="searchStudentId" oninput="searchStudent()" class="flex-1 bg-white border border-gray-300 rounded-lg p-2 font-cairo text-lg text-center focus:border-blue-900 focus:outline-none" placeholder="أدخل رقم الجلوس لجلب بياناته...">
+            <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-6 right-8 max-w-[100px] max-h-[100px] object-contain z-20">
+
+            <h1 class="font-amiri text-3xl md:text-4xl font-bold text-blue-900 text-center leading-tight mb-2 mt-10">
+                دبلومة توجيه القراءات العشر المتواتر
+            </h1>
+
+            <h2 class="font-cairo text-2xl md:text-3xl font-bold text-yellow-700 text-center mb-4">
+                بيان نجاح طالب
+            </h2>
+
+            <!-- مربع البحث برقم الجلوس (مُصغر) -->
+            <div class="no-print w-full max-w-lg mx-auto bg-blue-50 border border-blue-200 p-2 rounded-xl mb-4 flex items-center gap-4 shadow-sm">
+                <label class="font-cairo font-bold text-base text-blue-900 whitespace-nowrap px-2">ابحث برقم الجلوس:</label>
+                <input type="number" id="searchStudentId" oninput="searchStudent()" class="flex-1 bg-white border border-gray-300 rounded-lg p-1 font-cairo text-base text-center focus:border-blue-900 focus:outline-none" placeholder="أدخل رقم الجلوس لجلب بياناته...">
             </div>
 
-            <div class="w-full max-w-xl mx-auto bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm flex flex-col gap-6">
+            <!-- نموذج بيانات الطالب (مُصغر ومُحكم) -->
+            <div class="w-full max-w-lg mx-auto bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm flex flex-col gap-4 z-10">
+                
                 <div class="flex items-center gap-4">
-                    <label class="font-cairo font-bold text-xl text-blue-900 w-24 text-right">الاسم:</label>
-                    <input type="text" id="studentName" class="flex-1 bg-transparent border-b-2 border-dashed border-gray-400 font-cairo text-2xl font-bold text-gray-800 pb-1 focus:border-blue-900 focus:outline-none text-center" placeholder="اسم الطالب..." autocomplete="off" spellcheck="false">
+                    <label class="font-cairo font-bold text-lg text-blue-900 w-20 text-right">الاسم:</label>
+                    <input type="text" id="studentName" class="flex-1 bg-transparent border-b-2 border-dashed border-gray-400 font-cairo text-xl font-bold text-gray-800 pb-1 focus:border-blue-900 focus:outline-none text-center" placeholder="اسم الطالب..." autocomplete="off" spellcheck="false">
                 </div>
+                
                 <div class="flex items-center gap-4">
-                    <label class="font-cairo font-bold text-xl text-blue-900 w-24 text-right">التقدير:</label>
-                    <input type="text" id="studentGrade" class="flex-1 bg-transparent border-b-2 border-dashed border-gray-400 font-cairo text-xl font-bold text-gray-800 pb-1 focus:border-blue-900 focus:outline-none text-center" placeholder="مثال: ممتاز" autocomplete="off" spellcheck="false">
+                    <label class="font-cairo font-bold text-lg text-blue-900 w-20 text-right">التقدير:</label>
+                    <input type="text" id="studentGrade" class="flex-1 bg-transparent border-b-2 border-dashed border-gray-400 font-cairo text-lg font-bold text-gray-800 pb-1 focus:border-blue-900 focus:outline-none text-center" placeholder="مثال: ممتاز" autocomplete="off" spellcheck="false">
                 </div>
+                
                 <div class="flex items-center gap-4">
-                    <label class="font-cairo font-bold text-xl text-blue-900 w-24 text-right">المركز:</label>
-                    <input type="text" id="studentRank" class="flex-1 bg-transparent border-b-2 border-dashed border-gray-400 font-cairo text-xl font-bold text-gray-800 pb-1 focus:border-blue-900 focus:outline-none text-center" placeholder="مثال: الأول" autocomplete="off" spellcheck="false">
+                    <label class="font-cairo font-bold text-lg text-blue-900 w-20 text-right">المركز:</label>
+                    <input type="text" id="studentRank" class="flex-1 bg-transparent border-b-2 border-dashed border-gray-400 font-cairo text-lg font-bold text-gray-800 pb-1 focus:border-blue-900 focus:outline-none text-center" placeholder="مثال: الأول" autocomplete="off" spellcheck="false">
                 </div>
+
             </div>
             
-            <div class="w-full flex justify-between items-center mt-8 px-2 md:px-8">
-                <img src="images/image_0dda5e.png" alt="ختم الدكتور شعبان" class="max-h-20 md:max-h-24 object-contain mix-blend-multiply">
-                <img src="images/image_0dda44.png" alt="ختم الأكاديمية" class="max-h-24 md:max-h-28 object-contain mix-blend-multiply">
-                <img src="images/image_0dda79.png" alt="ختم الأستاذة إيمان" class="max-h-20 md:max-h-24 object-contain mix-blend-multiply">
+            <!-- الأختام (يمين، وسط، يسار) -->
+            <div class="w-full flex justify-between items-center mt-6 px-4 md:px-12 z-10">
+                <div class="flex flex-col items-center">
+                    <img src="images/image_0dda5e.png" alt="ختم الدكتور شعبان" class="max-h-16 md:max-h-20 object-contain mix-blend-multiply">
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="images/image_0dda44.png" alt="ختم الأكاديمية" class="max-h-20 md:max-h-24 object-contain mix-blend-multiply">
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="images/image_0dda79.png" alt="ختم الأستاذة إيمان" class="max-h-16 md:max-h-20 object-contain mix-blend-multiply">
+                </div>
             </div>
+
         </div>
 
         <div class="h-1 w-full bg-yellow-600"></div>
