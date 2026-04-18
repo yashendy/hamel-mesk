@@ -1,92 +1,45 @@
 body {
-    background-color: #f3f4f6;
+  background-color: #f3f4f6;
 }
 
 .pattern-bg {
-    background-color: #ffffff;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a8a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-
-.font-amiri {
-    font-family: "Amiri", serif;
-}
-
-.font-cairo {
-    font-family: "Cairo", sans-serif;
-}
-
-input:focus {
-    outline: none;
-}
-
-.page-panel.hidden {
-    display: none !important;
-}
-
-.page-panel:not(.hidden) {
-    display: flex;
-}
-
-.student-info-box {
-    min-height: 220px;
-}
-
-.student-stamps {
-    min-height: 120px;
-}
-
-.stamp-image {
-    max-height: 86px;
-    object-fit: contain;
-    mix-blend-mode: multiply;
-}
-
-.stamp-image-center {
-    max-height: 100px;
-}
-
-@media (max-width: 768px) {
-    .card-container {
-        height: auto;
-        min-height: 550px;
-    }
-
-    .student-stamps {
-        min-height: 90px;
-    }
-
-    .stamp-image {
-        max-height: 64px;
-    }
-
-    .stamp-image-center {
-        max-height: 76px;
-    }
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a8a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 @media print {
-    body {
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-    }
+  body {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
 
-    .no-print {
-        display: none !important;
-    }
+  .no-print {
+    display: none !important;
+  }
 
-    .card-container {
-        box-shadow: none !important;
-        border: 1px solid #e5e7eb;
-        margin: 0;
-        transform: scale(1.02);
-    }
+  .card-container {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb;
+    margin: 0;
+    transform: scale(1.1);
+  }
 
-    input::placeholder {
-        color: transparent;
-    }
+  input::placeholder {
+    color: transparent;
+  }
+}
+
+.font-amiri { font-family: 'Amiri', serif; }
+.font-cairo { font-family: 'Cairo', sans-serif; }
+
+input:focus {
+  outline: none;
+}
+
+.student-stamps {
+  min-height: 110px;
 }
