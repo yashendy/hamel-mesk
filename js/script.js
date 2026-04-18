@@ -1,158 +1,135 @@
-const appState = {
-    currentPage: 1
-};
+let currentPage = 1;
 
-const pageButtons = Array.from(document.querySelectorAll(".page-btn"));
-const pagePanels = [
-    document.getElementById("page1"),
-    document.getElementById("page2"),
-    document.getElementById("page3")
-];
-
-const downloadButton = document.getElementById("downloadBtn");
-const searchStudentIdInput = document.getElementById("searchStudentId");
-const studentNameInput = document.getElementById("studentName");
-const studentGradeInput = document.getElementById("studentGrade");
-const studentRankInput = document.getElementById("studentRank");
-
-function showPage(pageNumber) {
-    appState.currentPage = pageNumber;
-
-    pagePanels.forEach((panel, index) => {
-        const isActive = index + 1 === pageNumber;
-        panel.classList.toggle("hidden", !isActive);
-    });
-
-    pageButtons.forEach((button, index) => {
-        const isActive = index + 1 === pageNumber;
-
-        if (isActive) {
-            button.className =
-                "page-btn bg-blue-900 text-white font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2";
-        } else {
-            button.className =
-                "page-btn bg-gray-200 text-gray-700 hover:bg-gray-300 font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2";
-        }
-    });
+function getStudentFields() {
+  return {
+    idInput: document.getElementById('searchStudentId'),
+    nameInput: document.getElementById('studentName'),
+    gradeInput: document.getElementById('studentGrade'),
+    rankInput: document.getElementById('studentRank')
+  };
 }
 
 function clearStudentFields() {
-    studentNameInput.value = "";
-    studentGradeInput.value = "";
-    studentRankInput.value = "";
+  const { nameInput, gradeInput, rankInput } = getStudentFields();
+  nameInput.value = '';
+  gradeInput.value = '';
+  rankInput.value = '';
 }
 
 function searchStudent() {
-    const searchId = searchStudentIdInput.value.trim();
+  const { idInput, nameInput, gradeInput, rankInput } = getStudentFields();
+  const searchId = idInput.value.trim();
 
-    if (!searchId) {
-        clearStudentFields();
-        return;
-    }
-
-    const student = window.studentsDatabase.find((item) => item.id === searchId);
-
-    if (student) {
-        studentNameInput.value = student.name;
-        studentGradeInput.value = student.grade;
-        studentRankInput.value = student.rank;
-        return;
-    }
-
+  if (!searchId) {
     clearStudentFields();
+    return;
+  }
+
+  const student = studentsDatabase[searchId];
+
+  if (student) {
+    nameInput.value = student.name;
+    gradeInput.value = student.grade;
+    rankInput.value = student.rank;
+  } else {
+    clearStudentFields();
+  }
 }
 
-function getCurrentPageFileName() {
-    if (appState.currentPage === 1) {
-        return "الصفحة_الرئيسية.png";
-    }
+function showPage(pageNum) {
+  currentPage = pageNum;
 
-    if (appState.currentPage === 2) {
-        return "لجنة_التحكيم.png";
-    }
+  const pages = [
+    document.getElementById('page1'),
+    document.getElementById('page2'),
+    document.getElementById('page3')
+  ];
 
-    if (appState.currentPage === 3) {
-        const studentName = studentNameInput.value.trim();
-        return studentName ? `بيان_نجاح_${studentName}.png` : "بيان_نجاح_طالب.png";
-    }
+  const btns = [
+    document.getElementById('btnPage1'),
+    document.getElementById('btnPage2'),
+    document.getElementById('btnPage3')
+  ];
 
-    return "بطاقة_الأكاديمية.png";
+  pages.forEach((page, index) => {
+    page.style.display = index + 1 === pageNum ? 'flex' : 'none';
+  });
+
+  btns.forEach((button, index) => {
+    button.className = index + 1 === pageNum
+      ? 'bg-blue-900 text-white font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2'
+      : 'bg-gray-200 text-gray-700 hover:bg-gray-300 font-cairo font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2';
+  });
 }
 
-function prepareInputsForExport() {
-    const inputs = document.querySelectorAll(".card-container input");
+function getDownloadFileName() {
+  if (currentPage === 1) return 'الصفحة_الرئيسية.png';
+  if (currentPage === 2) return 'لجنة_التحكيم.png';
 
-    inputs.forEach((input) => {
-        input.dataset.placeholder = input.placeholder;
-        if (!input.value) {
-            input.placeholder = "";
-        }
+  const studentName = document.getElementById('studentName').value.trim();
+  return studentName ? `بيان_نجاح_${studentName}.png` : 'بيان_نجاح_طالب.png';
+}
+
+function downloadCard(btn) {
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '<span class="font-cairo">جاري التحضير...</span>';
+  btn.disabled = true;
+
+  const executeDownload = () => {
+    const card = document.querySelector('.card-container');
+    const inputs = document.querySelectorAll('.card-container input');
+
+    inputs.forEach(input => {
+      input.dataset.placeholder = input.placeholder;
+      if (!input.value) input.placeholder = '';
     });
 
-    return inputs;
-}
+    window.html2canvas(card, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    }).then(canvas => {
+      inputs.forEach(input => {
+        input.placeholder = input.dataset.placeholder || '';
+      });
 
-function restoreInputsAfterExport(inputs) {
-    inputs.forEach((input) => {
-        input.placeholder = input.dataset.placeholder || "";
+      const link = document.createElement('a');
+      link.download = getDownloadFileName();
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }).catch(error => {
+      console.error('خطأ في معالجة الصورة:', error);
+
+      inputs.forEach(input => {
+        input.placeholder = input.dataset.placeholder || '';
+      });
+
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      alert('عذراً، حدث خطأ أثناء تجهيز الصورة. سيتم فتح نافذة الطباعة كبديل.');
+      window.print();
     });
+  };
+
+  if (typeof window.html2canvas === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    script.onload = executeDownload;
+    script.onerror = () => {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      alert('تعذر تحميل أداة الصورة، سيتم استخدام الطباعة الافتراضية بدلاً من ذلك.');
+      window.print();
+    };
+    document.body.appendChild(script);
+  } else {
+    executeDownload();
+  }
 }
 
-async function downloadCurrentCard() {
-    const originalButtonContent = downloadButton.innerHTML;
-    downloadButton.disabled = true;
-    downloadButton.innerHTML = '<span class="font-cairo">جاري التحضير...</span>';
-
-    const inputs = prepareInputsForExport();
-
-    try {
-        const card = document.querySelector(".card-container");
-
-        if (typeof window.html2canvas !== "function") {
-            throw new Error("html2canvas library is not available.");
-        }
-
-        const canvas = await window.html2canvas(card, {
-            scale: 3,
-            useCORS: true,
-            backgroundColor: "#ffffff"
-        });
-
-        const link = document.createElement("a");
-        link.download = getCurrentPageFileName();
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    } catch (error) {
-        console.error("Error exporting card:", error);
-        alert("حدث خطأ أثناء تجهيز الصورة، سيتم فتح الطباعة كبديل.");
-        window.print();
-    } finally {
-        restoreInputsAfterExport(inputs);
-        downloadButton.disabled = false;
-        downloadButton.innerHTML = originalButtonContent;
-    }
-}
-
-function attachEvents() {
-    pageButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const pageNumber = Number(button.dataset.page);
-            showPage(pageNumber);
-        });
-    });
-
-    if (searchStudentIdInput) {
-        searchStudentIdInput.addEventListener("input", searchStudent);
-    }
-
-    if (downloadButton) {
-        downloadButton.addEventListener("click", downloadCurrentCard);
-    }
-}
-
-function init() {
-    attachEvents();
-    showPage(1);
-}
-
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener('DOMContentLoaded', () => {
+  showPage(1);
+});
