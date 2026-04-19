@@ -1,17 +1,33 @@
-// دالة البحث عن الطالب برقم الجلوس
+// دالة البحث عن الطالب برقم الجلوس مع إظهار رسالة الخطأ
 function searchStudent() {
     const searchId = document.getElementById('searchStudentId').value;
     const studentName = document.getElementById('studentName');
     const studentGrade = document.getElementById('studentGrade');
     const studentRank = document.getElementById('studentRank');
+    const errorMsg = document.getElementById('errorMsg');
 
-    const student = studentsDatabase.find(s => s.id === searchId);
+    // إذا كان حقل البحث فارغاً
+    if (!searchId) {
+        errorMsg.style.display = 'none';
+        studentName.value = "";
+        studentGrade.value = "";
+        studentRank.value = "";
+        return;
+    }
+
+    // استخدم == بدلاً من === لضمان توافق الرقم كنص أو كرقم
+    // يتم قراءة studentsDatabase من ملف students.js الخارجي
+    const student = window.studentsDatabase ? window.studentsDatabase.find(s => s.id == searchId) : null;
 
     if (student) {
+        // الطالب موجود
+        errorMsg.style.display = 'none';
         studentName.value = student.name;
         studentGrade.value = student.grade;
         studentRank.value = student.rank;
-    } else if (searchId === "") {
+    } else {
+        // الطالب غير موجود
+        errorMsg.style.display = 'block';
         studentName.value = "";
         studentGrade.value = "";
         studentRank.value = "";
@@ -40,22 +56,26 @@ function showPage(pageNum) {
 
 // دوال رفع الشعار
 function openDataModal() {
-    document.getElementById('dataModal').classList.remove('hidden');
+    const modal = document.getElementById('dataModal');
+    if(modal) modal.classList.remove('hidden');
 }
 
 function closeModal() {
-    document.getElementById('dataModal').classList.add('hidden');
+    const modal = document.getElementById('dataModal');
+    if(modal) modal.classList.add('hidden');
 }
 
 function saveDataFromModal() {
     const logoInput = document.getElementById('modalLogo');
     
-    if (logoInput.files && logoInput.files[0]) {
+    if (logoInput && logoInput.files && logoInput.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const logoImg = document.getElementById('cardLogo');
-            logoImg.src = e.target.result;
-            logoImg.style.display = 'block';
+            if(logoImg) {
+                logoImg.src = e.target.result;
+                logoImg.style.display = 'block';
+            }
         };
         reader.readAsDataURL(logoInput.files[0]);
     }
@@ -63,8 +83,31 @@ function saveDataFromModal() {
     closeModal();
 }
 
-// دالة التحميل كصورة
+// دالة التحميل كصورة (تدعم التحميل المباشر للصور الجاهزة أو تصوير الشاشة)
 function downloadCard(btn) {
+    const page3 = document.getElementById('page3');
+
+    // 1. إذا كنا في صفحة الطلبة، سنقوم بتحميل الصورة الجاهزة من المجلد
+    if (page3 && page3.style.display !== 'none') {
+        const searchId = document.getElementById('searchStudentId').value;
+        const student = window.studentsDatabase ? window.studentsDatabase.find(s => s.id == searchId) : null;
+
+        if (student) {
+            // تحميل الصورة الجاهزة مباشرة
+            const link = document.createElement('a');
+            // تأكد أن مسار الصور وامتدادها يطابق ما لديك (مثال: assets/certificates/1.jpg)
+            link.href = `assets/certificates/${student.id}.jpg`; 
+            link.download = `شهادة_${student.name}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert("يرجى البحث عن رقم جلوس صحيح أولاً لتحميل الشهادة.");
+        }
+        return; // إنهاء الدالة لعدم تشغيل html2canvas
+    }
+
+    // 2. الكود الخاص بـ html2canvas للصفحات الأولى والثانية 
     const originalText = btn.innerHTML;
     btn.innerHTML = '<span class="font-cairo">جاري التحضير...</span>';
     
