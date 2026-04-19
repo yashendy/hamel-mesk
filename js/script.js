@@ -96,8 +96,8 @@ function downloadCard(btn) {
             // تحميل الصورة الجاهزة مباشرة
             const link = document.createElement('a');
             // تأكد أن مسار الصور وامتدادها يطابق ما لديك (مثال: assets/certificates/1.jpg)
-            link.href = `assets/certificates/${student.id}.jpg`; 
-            link.download = `شهادة_${student.name}.jpg`;
+            link.href = `assets/certificates/${student.id}.jpeg`; 
+            link.download = `شهادة_${student.name}.jpeg`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
