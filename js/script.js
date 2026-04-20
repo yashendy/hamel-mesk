@@ -116,7 +116,7 @@ function downloadCard(btn) {
     });
 }
 
-// الدالة الخاصة بتحميل كروت جميع المحكمين تلقائياً
+// الدالة الخاصة بتحميل كروت جميع المحكمين تلقائياً (تعتمد على ID)
 async function downloadJudgesCards(btn) {
     if (!window.judgesDatabase || window.judgesDatabase.length === 0) {
         alert("بيانات المحكمين غير موجودة.");
@@ -152,9 +152,12 @@ async function downloadJudgesCards(btn) {
             });
 
             const link = document.createElement('a');
-            link.download = `${judge.name}.jpg`;
+            // حفظ الصورة برقم الـ ID
+            link.download = `${judge.id}.jpg`;
             link.href = canvas.toDataURL('image/jpeg', 0.95);
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             
             await sleep(500);
         } catch (err) {
@@ -167,4 +170,54 @@ async function downloadJudgesCards(btn) {
     btn.innerHTML = originalText;
     btn.disabled = false;
     alert("تم تحميل جميع كروت المحكمين بنجاح.");
+}
+
+// دالة تحميل كارت محكم واحد بناءً على الرقم التعريفي (ID)
+async function downloadSingleJudgeCard(judgeId) {
+    if (!window.judgesDatabase) {
+        alert("بيانات المحكمين غير محملة.");
+        return;
+    }
+
+    const judge = window.judgesDatabase.find(j => j.id === judgeId);
+    if (!judge) {
+        alert("لم يتم العثور على بيانات هذا المحكم.");
+        return;
+    }
+
+    const page2 = document.getElementById('page2');
+    const page4 = document.getElementById('page4');
+    const judgeNameDisplay = document.getElementById('judgeNameDisplay');
+    const judgeRoleDisplay = document.getElementById('judgeRoleDisplay');
+    const cardContainer = document.querySelector('.card-container');
+
+    const prevDisplay = page2.style.display;
+    page2.style.display = 'none';
+    page4.style.display = 'flex';
+    
+    judgeNameDisplay.textContent = judge.name;
+    judgeRoleDisplay.textContent = judge.role;
+
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    try {
+        const canvas = await window.html2canvas(cardContainer, {
+            scale: 3,
+            useCORS: true,
+            backgroundColor: '#ffffff'
+        });
+
+        const link = document.createElement('a');
+        link.download = `${judge.id}.jpg`;
+        link.href = canvas.toDataURL('image/jpeg', 0.95);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (err) {
+        console.error("خطأ أثناء التصوير:", err);
+        alert("حدث خطأ أثناء محاولة تحميل الكارت.");
+    } finally {
+        page4.style.display = 'none';
+        page2.style.display = prevDisplay;
+    }
 }
