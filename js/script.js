@@ -116,7 +116,7 @@ function downloadCard(btn) {
     });
 }
 
-// الدالة الخاصة بتحميل كروت جميع المحكمين تلقائياً (تعتمد على ID)
+// الدالة الخاصة بتحميل كروت جميع المحكمين تلقائياً (تعتمد على ID وتصور الشاشة برمجياً)
 async function downloadJudgesCards(btn) {
     if (!window.judgesDatabase || window.judgesDatabase.length === 0) {
         alert("بيانات المحكمين غير موجودة.");
@@ -172,8 +172,9 @@ async function downloadJudgesCards(btn) {
     alert("تم تحميل جميع كروت المحكمين بنجاح.");
 }
 
-// دالة تحميل كارت محكم واحد بناءً على الرقم التعريفي (ID)
-async function downloadSingleJudgeCard(judgeId) {
+// دالة تحميل كارت محكم واحد (من الصور المرفوعة مسبقاً في مجلد assets/judges)
+function downloadSingleJudgeCard(judgeId) {
+    // التحقق من وجود بيانات المحكم
     if (!window.judgesDatabase) {
         alert("بيانات المحكمين غير محملة.");
         return;
@@ -185,39 +186,15 @@ async function downloadSingleJudgeCard(judgeId) {
         return;
     }
 
-    const page2 = document.getElementById('page2');
-    const page4 = document.getElementById('page4');
-    const judgeNameDisplay = document.getElementById('judgeNameDisplay');
-    const judgeRoleDisplay = document.getElementById('judgeRoleDisplay');
-    const cardContainer = document.querySelector('.card-container');
-
-    const prevDisplay = page2.style.display;
-    page2.style.display = 'none';
-    page4.style.display = 'flex';
+    // إنشاء رابط وهمي لتحميل الصورة المحفوظة مسبقاً
+    const link = document.createElement('a');
+    // توجيه الرابط إلى المسار الصحيح للصورة المرفوعة
+    link.href = `assets/judges/${judge.id}.jpg`;
+    // تحديد اسم الملف عند التحميل ليكون بالاسم العربي لسهولة القراءة
+    link.download = `${judge.name}_كارت_تعارف.jpg`; 
     
-    judgeNameDisplay.textContent = judge.name;
-    judgeRoleDisplay.textContent = judge.role;
-
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    try {
-        const canvas = await window.html2canvas(cardContainer, {
-            scale: 3,
-            useCORS: true,
-            backgroundColor: '#ffffff'
-        });
-
-        const link = document.createElement('a');
-        link.download = `${judge.id}.jpg`;
-        link.href = canvas.toDataURL('image/jpeg', 0.95);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    } catch (err) {
-        console.error("خطأ أثناء التصوير:", err);
-        alert("حدث خطأ أثناء محاولة تحميل الكارت.");
-    } finally {
-        page4.style.display = 'none';
-        page2.style.display = prevDisplay;
-    }
+    // إضافة الرابط للصفحة، الضغط عليه، ثم إزالته
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
