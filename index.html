@@ -92,7 +92,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                تحميل كروت المحكمين
+                تحميل كروت المحكمين (الكل)
             </button>
         </div>
     </div>
@@ -153,25 +153,74 @@
                 <div class="flex-1 bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
                     <h3 class="font-cairo font-bold text-xl text-blue-900 mb-4 border-b-2 border-yellow-600 pb-2 inline-block">لجنة الرجال</h3>
                     <ul class="font-cairo text-gray-800 space-y-4 font-semibold text-lg">
-                        <li>
-                            <span class="text-yellow-600 ml-2">▪</span> د. شعبان سند
-                            <span class="block font-normal text-sm text-gray-500 pr-5 mt-1">مدير الأكاديمية</span>
+                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                            <div>
+                                <span class="text-yellow-600 ml-2">▪</span> د. شعبان سند
+                                <span class="block font-normal text-xs text-gray-500 pr-5 mt-1">مدير الأكاديمية</span>
+                            </div>
+                            <button onclick="downloadSingleJudgeCard('J101')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
                         </li>
-                        <li><span class="text-yellow-600 ml-2">▪</span> الشيخ سعد فرج موسى صالح</li>
+                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                            <div><span class="text-yellow-600 ml-2">▪</span> الشيخ سعد فرج موسى</div>
+                            <button onclick="downloadSingleJudgeCard('J102')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="flex-1 bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
                     <h3 class="font-cairo font-bold text-xl text-blue-900 mb-4 border-b-2 border-yellow-600 pb-2 inline-block">لجنة الأخوات</h3>
                     <ul class="font-cairo text-gray-800 space-y-4 font-semibold text-lg">
-                        <li>
-                            <span class="text-yellow-600 ml-2">١.</span> م. إيمان المرسي
-                            <span class="block font-normal text-sm text-gray-500 pr-6 mt-1">مشرفة الأكاديمية</span>
+                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                            <div>
+                                <span class="text-yellow-600 ml-2">١.</span> م. إيمان المرسي
+                                <span class="block font-normal text-xs text-gray-500 pr-6 mt-1">مشرفة الأكاديمية</span>
+                            </div>
+                            <button onclick="downloadSingleJudgeCard('J103')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
                         </li>
-                        <li><span class="text-yellow-600 ml-2">٢.</span> أ. حميدة المرسي</li>
-                        <li><span class="text-yellow-600 ml-2">٢.</span> د. عزة إبراهيم</li>
-                        <li><span class="text-yellow-600 ml-2">٣.</span> أ. زهرة غزال</li>
-                        <li><span class="text-yellow-600 ml-2">٤.</span> أ. فاطمة أحمد طه</li>
+                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                            <div><span class="text-yellow-600 ml-2">٢.</span> أ. حميدة المرسي</div>
+                            <button onclick="downloadSingleJudgeCard('J104')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
+                        </li>
+                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                            <div><span class="text-yellow-600 ml-2">٣.</span> د. عزة إبراهيم</div>
+                            <button onclick="downloadSingleJudgeCard('J105')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
+                        </li>
+                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                            <div><span class="text-yellow-600 ml-2">٤.</span> أ. زهرة غزال</div>
+                            <button onclick="downloadSingleJudgeCard('J106')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
+                        </li>
+                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                            <div><span class="text-yellow-600 ml-2">٥.</span> أ. فاطمة أحمد طه</div>
+                            <button onclick="downloadSingleJudgeCard('J107')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
