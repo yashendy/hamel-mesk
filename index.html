@@ -85,7 +85,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                 </svg>
-                تحميل البطاقة كصورة (للطباعة)
+                تحميل البطاقة الحالية
+            </button>
+            
+            <button onclick="downloadJudgesCards(this)" id="btnDownloadJudges" class="bg-yellow-600 hover:bg-yellow-700 text-white font-cairo font-semibold py-2 px-6 rounded-lg shadow-md transition-colors flex items-center gap-2" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                تحميل كروت المحكمين
             </button>
         </div>
     </div>
@@ -257,10 +264,55 @@
             </div>
         </div>
 
+        <div id="page4" style="display: none;" class="flex-1 flex-col items-center justify-start p-6 relative w-full z-10">
+            <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-5 right-6 max-w-[90px] max-h-[90px] object-contain z-20" />
+
+            <h1 class="font-amiri text-[28px] md:text-[34px] font-bold text-blue-900 text-center leading-tight mb-4 mt-12">
+                دبلومة توجيه القراءات العشر المتواتر
+            </h1>
+
+            <h2 class="font-cairo text-2xl font-bold text-yellow-700 text-center mb-8">
+                بطاقة تعارف - لجنة التحكيم
+            </h2>
+
+            <div class="mx-auto bg-gray-50 px-8 py-6 rounded-xl border border-gray-200 shadow-sm flex flex-col gap-6 z-10 w-full max-w-[400px]">
+                <div class="flex items-center gap-3">
+                    <label class="font-cairo font-bold text-lg text-blue-900 w-20 text-right">الاسم:</label>
+                    <div id="judgeNameDisplay" class="flex-1 border-b-2 border-gray-400 font-cairo text-xl font-bold text-gray-800 pb-1 text-center">
+                        </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <label class="font-cairo font-bold text-lg text-blue-900 w-20 text-right">الصفة:</label>
+                    <div id="judgeRoleDisplay" class="flex-1 border-b-2 border-gray-400 font-cairo text-lg font-bold text-yellow-700 pb-1 text-center">
+                        </div>
+                </div>
+            </div>
+
+            <div class="w-full mt-12 px-4 z-10 absolute bottom-12">
+                <div class="grid grid-cols-3 gap-4 items-end text-center max-w-[560px] mx-auto">
+                    <div class="flex flex-col items-center">
+                        <img src="assets/image_0dda5e.png" alt="ختم مدير المركز" class="stamp-image" />
+                        <p class="font-cairo text-sm font-semibold text-gray-700 mt-2">ختم مدير المركز</p>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <img src="assets/image_0dda79.png" alt="ختم المشرف" class="stamp-image" />
+                        <p class="font-cairo text-sm font-semibold text-gray-700 mt-2">ختم المشرف</p>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <img src="assets/image_0dda44.png" alt="ختم المركز" class="stamp-image" />
+                        <p class="font-cairo text-sm font-semibold text-gray-700 mt-2">ختم المركز</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="h-1 w-full bg-yellow-600"></div>
         <div class="h-3 w-full bg-blue-900"></div>
     </div>
 
+    <script src="js/judges.js"></script>
     <script src="js/students.js"></script>
     <script src="js/script.js"></script>
 </body>
