@@ -15,11 +15,13 @@
             background-color: #f3f4f6;
         }
 
+        /* نمط الزخرفة الإسلامية/الرسمية الخفيفة في الخلفية */
         .pattern-bg {
             background-color: #ffffff;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a8a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
+        /* إعدادات الطباعة للحصول على كارت نظيف */
         @media print {
             body {
                 background: white;
@@ -29,18 +31,17 @@
                 height: 100vh;
                 margin: 0;
             }
-
             .no-print {
                 display: none !important;
             }
-
             .card-container {
                 box-shadow: none !important;
                 border: 1px solid #e5e7eb;
                 margin: 0;
-                transform: scale(1.05);
+                /* تم تعديل التكبير إلى 1.0 لضمان عدم قص الحواف عند زيادة الأسماء */
+                transform: scale(1.0); 
             }
-
+            /* إخفاء حدود الإدخال عند الطباعة إذا كان فارغاً */
             input::placeholder {
                 color: transparent;
             }
@@ -49,6 +50,7 @@
         .font-amiri { font-family: 'Amiri', serif; }
         .font-cairo { font-family: 'Cairo', sans-serif; }
 
+        /* إزالة التحديد الأزرق الافتراضي عند الكتابة */
         input:focus {
             outline: none;
         }
@@ -138,85 +140,88 @@
             </div>
         </div>
 
-        <div id="page2" style="display: none;" class="flex-1 flex-col items-center justify-center p-8 relative w-full z-10">
-            <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-6 right-8 max-w-[120px] max-h-[120px] object-contain z-20" />
+        <div id="page2" style="display: none;" class="flex-1 flex-col items-center justify-start p-6 relative w-full z-10">
+            
+            <div class="w-full flex justify-between items-center mb-4 mt-2 px-4 z-20">
+                <img src="assets/logo.png" alt="شعار الأكاديمية" class="max-w-[75px] max-h-[75px] object-contain" />
+                <h1 class="font-amiri text-xl md:text-2xl font-bold text-blue-900 text-left leading-tight">
+                    دبلومة توجيه القراءات<br />العشر المتواترة
+                </h1>
+            </div>
 
-            <h1 class="font-amiri text-3xl md:text-4xl font-bold text-blue-900 text-center leading-tight mb-4 mt-20">
-                دبلومة توجيه القراءات العشر المتواتر
-            </h1>
-
-            <h2 class="font-cairo text-2xl md:text-3xl font-bold text-yellow-700 text-center mb-8">
+            <h2 class="font-cairo text-xl md:text-2xl font-bold text-yellow-700 text-center mb-4">
                 أعضاء لجنة التحكيم
             </h2>
 
-            <div class="flex flex-row w-full max-w-3xl gap-8 px-4 text-right justify-center">
-                <div class="flex-1 bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
-                    <h3 class="font-cairo font-bold text-xl text-blue-900 mb-4 border-b-2 border-yellow-600 pb-2 inline-block">لجنة الرجال</h3>
-                    <ul class="font-cairo text-gray-800 space-y-4 font-semibold text-lg">
-                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+            <div class="flex flex-row w-full max-w-4xl gap-4 px-2 text-right justify-center">
+                
+                <div class="flex-1 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                    <h3 class="font-cairo font-bold text-lg text-blue-900 mb-3 border-b-2 border-yellow-600 pb-1 inline-block">لجنة الرجال</h3>
+                    <ul class="font-cairo text-gray-800 space-y-2 font-semibold text-sm">
+                        <li class="flex items-center justify-between gap-1 border-b border-gray-100 pb-1">
                             <div>
-                                <span class="text-yellow-600 ml-2">▪</span> د. شعبان سند
-                                <span class="block font-normal text-xs text-gray-500 pr-5 mt-1">مدير الأكاديمية</span>
+                                <span class="text-yellow-600 ml-1">▪</span> د. شعبان سند
+                                <span class="block font-normal text-[11px] text-gray-500 pr-4 mt-0.5">مدير الأكاديمية</span>
                             </div>
-                            <button onclick="downloadSingleJudgeCard('J101')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <button onclick="downloadSingleJudgeCard('J101')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-1.5 rounded-md transition-colors shadow-sm no-print" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
                         </li>
-                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
-                            <div><span class="text-yellow-600 ml-2">▪</span> الشيخ سعد فرج موسى</div>
-                            <button onclick="downloadSingleJudgeCard('J102')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <li class="flex items-center justify-between gap-1 border-b border-gray-100 pb-1">
+                            <div><span class="text-yellow-600 ml-1">▪</span> الشيخ سعد فرج موسى</div>
+                            <button onclick="downloadSingleJudgeCard('J102')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-1.5 rounded-md transition-colors shadow-sm no-print" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
                         </li>
-                    </ul>
+                        </ul>
                 </div>
 
-                <div class="flex-1 bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
-                    <h3 class="font-cairo font-bold text-xl text-blue-900 mb-4 border-b-2 border-yellow-600 pb-2 inline-block">لجنة الأخوات</h3>
-                    <ul class="font-cairo text-gray-800 space-y-4 font-semibold text-lg">
-                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                <div class="flex-1 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                    <h3 class="font-cairo font-bold text-lg text-blue-900 mb-3 border-b-2 border-yellow-600 pb-1 inline-block">لجنة الأخوات</h3>
+                    <ul class="font-cairo text-gray-800 space-y-2 font-semibold text-sm">
+                        <li class="flex items-center justify-between gap-1 border-b border-gray-100 pb-1">
                             <div>
-                                <span class="text-yellow-600 ml-2">١.</span> م. إيمان المرسي
-                                <span class="block font-normal text-xs text-gray-500 pr-6 mt-1">مشرفة الأكاديمية</span>
+                                <span class="text-yellow-600 ml-1">١.</span> م. إيمان المرسي
+                                <span class="block font-normal text-[11px] text-gray-500 pr-4 mt-0.5">مشرفة الأكاديمية</span>
                             </div>
-                            <button onclick="downloadSingleJudgeCard('J103')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <button onclick="downloadSingleJudgeCard('J103')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-1.5 rounded-md transition-colors shadow-sm no-print" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
                         </li>
-                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
-                            <div><span class="text-yellow-600 ml-2">٢.</span> أ. حميدة المرسي</div>
-                            <button onclick="downloadSingleJudgeCard('J104')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <li class="flex items-center justify-between gap-1 border-b border-gray-100 pb-1">
+                            <div><span class="text-yellow-600 ml-1">٢.</span> أ. حميدة المرسي</div>
+                            <button onclick="downloadSingleJudgeCard('J104')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-1.5 rounded-md transition-colors shadow-sm no-print" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
                         </li>
-                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
-                            <div><span class="text-yellow-600 ml-2">٣.</span> د. عزة إبراهيم</div>
-                            <button onclick="downloadSingleJudgeCard('J105')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <li class="flex items-center justify-between gap-1 border-b border-gray-100 pb-1">
+                            <div><span class="text-yellow-600 ml-1">٣.</span> د. عزة إبراهيم</div>
+                            <button onclick="downloadSingleJudgeCard('J105')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-1.5 rounded-md transition-colors shadow-sm no-print" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
                         </li>
-                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
-                            <div><span class="text-yellow-600 ml-2">٤.</span> أ. زهرة غزال</div>
-                            <button onclick="downloadSingleJudgeCard('J106')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <li class="flex items-center justify-between gap-1 border-b border-gray-100 pb-1">
+                            <div><span class="text-yellow-600 ml-1">٤.</span> أ. زهرة غزال</div>
+                            <button onclick="downloadSingleJudgeCard('J106')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-1.5 rounded-md transition-colors shadow-sm no-print" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
                         </li>
-                        <li class="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
-                            <div><span class="text-yellow-600 ml-2">٥.</span> أ. فاطمة أحمد طه</div>
-                            <button onclick="downloadSingleJudgeCard('J107')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-2 rounded-lg transition-colors shadow-sm" title="تحميل الكرت">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <li class="flex items-center justify-between gap-1 border-b border-gray-100 pb-1">
+                            <div><span class="text-yellow-600 ml-1">٥.</span> أ. فاطمة أحمد طه</div>
+                            <button onclick="downloadSingleJudgeCard('J107')" class="bg-blue-100 hover:bg-blue-200 text-blue-900 p-1.5 rounded-md transition-colors shadow-sm no-print" title="تحميل الكرت">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                             </button>
@@ -230,7 +235,7 @@
             <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-5 right-6 max-w-[90px] max-h-[90px] object-contain z-20" />
 
             <h1 class="font-amiri text-[28px] md:text-[34px] font-bold text-blue-900 text-center leading-tight mb-1 mt-8">
-                دبلومة توجيه القراءات العشر المتواتر
+                دبلومة توجيه القراءات العشر المتواترة
             </h1>
 
             <h2 class="font-cairo text-xl md:text-2xl font-bold text-yellow-700 text-center mb-4">
@@ -317,7 +322,7 @@
             <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute top-5 right-6 max-w-[90px] max-h-[90px] object-contain z-20" />
 
             <h1 class="font-amiri text-[28px] md:text-[34px] font-bold text-blue-900 text-center leading-tight mb-4 mt-12">
-                دبلومة توجيه القراءات العشر المتواتر
+                دبلومة توجيه القراءات العشر المتواترة
             </h1>
 
             <h2 class="font-cairo text-2xl font-bold text-yellow-700 text-center mb-8">
