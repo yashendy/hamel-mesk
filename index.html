@@ -38,10 +38,8 @@
                 box-shadow: none !important;
                 border: 1px solid #e5e7eb;
                 margin: 0;
-                /* تم تعديل التكبير إلى 1.0 لضمان عدم قص الحواف عند زيادة الأسماء */
                 transform: scale(1.0); 
             }
-            /* إخفاء حدود الإدخال عند الطباعة إذا كان فارغاً */
             input::placeholder {
                 color: transparent;
             }
@@ -50,7 +48,6 @@
         .font-amiri { font-family: 'Amiri', serif; }
         .font-cairo { font-family: 'Cairo', sans-serif; }
 
-        /* إزالة التحديد الأزرق الافتراضي عند الكتابة */
         input:focus {
             outline: none;
         }
@@ -120,9 +117,9 @@
                 العشر المتواترة
             </h1>
 
-            <h3 class="font-cairo text-2xl font-bold text-blue-900 mb-2 text-center">
+            <h2 class="font-cairo text-2xl font-bold text-blue-900 mb-2 text-center">
                 دبلومة التوجيه
-            </h3>
+            </h2>
 
             <div class="font-cairo text-lg text-gray-600 mb-8 text-center font-semibold bg-gray-100 px-4 py-1 rounded-full inline-block mx-auto">
                 الدورة الثانية (١٤٤٥هـ - ١٤٤٧هـ)
@@ -142,10 +139,10 @@
 
         <div id="page2" style="display: none;" class="flex-1 flex-col items-center justify-start p-6 relative w-full z-10">
             
-            <div class="w-full flex justify-between items-center mb-4 mt-2 px-4 z-20">
-                <img src="assets/logo.png" alt="شعار الأكاديمية" class="max-w-[75px] max-h-[75px] object-contain" />
-                <h1 class="font-amiri text-xl md:text-2xl font-bold text-blue-900 text-left leading-tight">
-                    دبلومة توجيه القراءات<br />العشر المتواترة
+            <div class="w-full flex justify-center items-center mb-4 mt-2 px-4 z-20 relative min-h-[75px]">
+                <img src="assets/logo.png" alt="شعار الأكاديمية" class="absolute right-4 max-w-[75px] max-h-[75px] object-contain" />
+                <h1 class="font-amiri text-xl md:text-2xl font-bold text-blue-900 text-center whitespace-nowrap">
+                    دبلومة توجيه القراءات العشر المتواترة
                 </h1>
             </div>
 
@@ -177,7 +174,7 @@
                                 </svg>
                             </button>
                         </li>
-                        </ul>
+                    </ul>
                 </div>
 
                 <div class="flex-1 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
